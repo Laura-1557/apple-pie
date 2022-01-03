@@ -1,4 +1,6 @@
-affirmative_answer = ["yes", "Yes", "yeah", "Yeah"]
+# you will need Shopping_List.txt and Ingredients_in_stock.txt text files to run this programme properly
+
+affirmative_answer = ["yes", "yeah"]
 ingredients = [
         "apple",
         "apples",
@@ -11,12 +13,14 @@ ingredients = [
 
 def main():
 
+    ingredient_name = input("Which ingredients do you have? ").casefold()
+
     def ask_to_shop():
-        need_ingredient = input("Do you want to add this item to your shopping list for next time anyway? ")
+        need_ingredient = input("Do you want to add this item to your shopping list for next time anyway? ").casefold()
         if need_ingredient in affirmative_answer:
             with open('Shopping_List.txt', 'r') as todo_file:
                 todo = todo_file.read()
-            todo = todo + ingredient_name + "\n"
+            todo = todo + ingredient_name.capitalize() + "\n"
             with open('Shopping_List.txt', "w+") as todo_file:
                 todo_file.write(todo)
                 print("Ok, added to Shopping List")
@@ -26,11 +30,9 @@ def main():
     def add_to_stock_list():
         with open('Ingredients_in_stock.txt', 'r') as todo_file:
             todo = todo_file.read()
-        todo = todo + ingredient_name + "\n"
+        todo = todo + ingredient_name.capitalize() + "\n"
         with open('Ingredients_in_stock.txt', "w+") as todo_file:
             todo_file.write(todo)
-
-    ingredient_name = input("Which ingredients do you have? ")
 
     if ingredient_name not in ingredients:
         have_ingredient = input("Maybe we could use that. Do you want to add this to the recipe? Yes/No ")
@@ -40,8 +42,7 @@ def main():
             see_ingredient_list = input("Do you want to see your list? ")
             if see_ingredient_list in affirmative_answer:
                 print(ingredients)
-            else:
-                print("Ok.", end=" ")
+            ask_to_shop()
             main()
 
         else:
